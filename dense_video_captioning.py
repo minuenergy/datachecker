@@ -48,7 +48,7 @@ def putSubtitle(frame:np.array, text:str, text_position:tuple, font:int, font_sc
     font_color = (255, 255, 255)
     font_thickness = 2
     '''
-
+    # write subtitles
     text_loc = text_position[1]
     if len(index_list)>=2:
         sub_start = 0
@@ -59,6 +59,12 @@ def putSubtitle(frame:np.array, text:str, text_position:tuple, font:int, font_sc
     else:
         text_loc += word_height+2
         cv2.putText(frame, text, (0, text_loc), font, font_scale, (255, 255, 255), thickness)
+
+    # write number of words
+    text_loc += word_height+2
+
+    cv2.putText(frame, 'num of words: '+str(text.count(' ')), (0, text_loc), font, font_scale, (255, 255, 255), thickness)
+    #cv2.putText(frame, text[:text.find(' ')] + str(text.count(' ')), (0, text_loc), font, font_scale, (255, 255, 255), thickness)
 
 
 def check_subtitle_pad(timestamps_np, sentences, every_words_dict,resize_size, text_height):
@@ -91,7 +97,7 @@ def check_subtitle_pad(timestamps_np, sentences, every_words_dict,resize_size, t
         if max_index < len(sent_index):
             max_index = len(sent_index)
         sent_index_list.append(sent_index)
-    padding = np.full(((text_height)*(max_index+2), resize_size, 3), 0, dtype=np.uint8)
+    padding = np.full(((text_height)*(max_index+3), resize_size, 3), 0, dtype=np.uint8) # max_index + 3 for write sentences + number of words
 
     return sent_index_list, padding
 
@@ -101,7 +107,7 @@ def video_open_in_jupyter(video_path: str = None, resize_size: int=250, timestam
     '''
     return X
     
-    read your video at jupyter notebook
+    read your video at jupyter notebook 
     
     if timestamps exist:
         play the corresponding timestamped portion of the video
@@ -159,10 +165,11 @@ def video_open_in_jupyter(video_path: str = None, resize_size: int=250, timestam
                     pass
                 frame = cv2.imencode('.jpg', frame)[1].tobytes()
                 video.value = frame
-
-
-                if (end_frame + 1 - start_frame)<500: # play slow for shorter than 500 frames video
+                
+                if (end_frame + 1 - start_frame)<500:
                     time.sleep(5/(end_frame + 1 - start_frame))
+                else:
+                    pass
 
 
 def main():
