@@ -7,3 +7,8 @@ Play Videos with subtitles ( subtitles : label, pred )
 ### mmdet_coco_loader.py
 Check your COCO dataset with bbox+class_name
 ![combined_batch_image](https://github.com/minuenergy/datachecker/assets/72018553/2b6115c7-da1d-468f-b1f6-3f650aac829d)
+
+install above
+apt install ttf-mscorefonts-installer
+fc-cache -f
+fc-match Arial
