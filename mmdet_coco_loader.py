@@ -5,9 +5,6 @@ from mmcv.parallel import DataContainer as DC
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 
-
-
-
 def unwrap_data(data):
     if isinstance(data, DC):
         return data.data[0] if isinstance(data.data, list) else data.data
